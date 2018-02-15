@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  smb-mount:
+    image: mumiehub/smb-mount
+#    build: .
+    environment:
+      - AccessFolder=/mnt
+      - SERVERPATH=*****
+      - MOUNTPOINT=/mnt/smb
+      - MOUNTOPTIONS=vers=1.0,iocharset=utf8,username=*****,password=*****
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /mnt/HostMountPoint:/mnt/smb:shared
+    restart: unless-stopped
+    container_name: mount
